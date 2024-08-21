@@ -1,0 +1,70 @@
+<!-- src/app/auth/register/register.component.html -->
+
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+    <div>
+      <label>DNI:</label>
+      <input formControlName="DNI" type="text">
+    </div>
+    
+    <div>
+      <label>Nombre:</label>
+      <input formControlName="NOMBRE" type="text">
+    </div>
+  
+    <div>
+      <label>Nombre de usuario (NAMEAPP):</label>
+      <input formControlName="NAMEAPP" type="text">
+    </div>
+  
+    <div>
+      <label>Apellidos:</label>
+      <input formControlName="APELLIDOS" type="text">
+    </div>
+  
+    <div>
+      <label>Email:</label>
+      <input formControlName="EMAIL" type="email">
+    </div>
+  
+    <div>
+      <label>Password:</label>
+      <input formControlName="PASSWORD" type="password">
+    </div>
+  
+    <div>
+      <label>Fecha de Nacimiento:</label>
+      <input formControlName="FECHANAC" type="date">
+    </div>
+  
+    <div>
+      <label>Dirección:</label>
+      <input formControlName="DIRECCION" type="text">
+    </div>
+  
+    <div>
+      <label>Población (ID_POBLACION):</label>
+      <input formControlName="ID_POBLACION" type="text">
+    </div>
+  
+    <div>
+      <label>Código Postal:</label>
+      <input formControlName="COD_POSTAL" type="text">
+    </div>
+  
+    <div>
+        <label>Avatar:</label>
+        <input type="file" (change)="onFileSelected($event)">
+    </div>
+
+    <div>
+      <label>Sexo:</label>
+      <select formControlName="ROLE">
+        <option value="hombre">Hombre</option>
+        <option value="mujer">Mujer</option>
+        <option value="otro">Prefiero no identificarme</option>
+      </select>
+    </div>
+  
+    <button type="submit">Registrarse</button>
+  </form>
+  

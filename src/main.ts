@@ -1,6 +1,9 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-import { appConfig } from './app/app.config';
-import { AppComponent } from './app/app.component';
+// src/main.ts
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { AppComponent } from './app/app.component'; // Importa el componente standalone
+
+platformBrowserDynamic()
+  .bootstrapModule(AppComponent) // Arranca la aplicación con el componente standalone
+  .catch(err => console.error(err));
