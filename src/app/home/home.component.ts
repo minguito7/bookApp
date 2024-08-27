@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-   
+    
     this.bookService.getBooksActivos().subscribe(response => {     
          
       this.books = response.resultado;
@@ -49,16 +49,18 @@ export class HomeComponent implements OnInit {
     this.checkLoginStatus();
     console.log(this.isLoggedIn);
 
+
     const token = localStorage.getItem('Bearer');
-    console.log("TOKEN DEL ALMACENAMIENTO LOCAL: "+ token)
+    console.log("TOKEN DEL ALMACENAMIENTO LOCAL: "+ token);
     if (token) {
       const decodedToken: any = jwt_decode(token);
       const userId = decodedToken.decodedToken;
       this.authService.validateToken(token).subscribe(response => {
         this.fotoServ = this.baseUrl+response.usuarioLogged.AVATAR;
+        this.determinarRol(response.usuarioLogged);
         //const objectURL = URL.createObjectURL(this.fotoServ);
         //this.photoUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-        console.log("holaa aquii: " + this.fotoServ)
+     
       });
     } 
 
@@ -119,26 +121,34 @@ export class HomeComponent implements OnInit {
     return this.authService.isLoggedIn;
   }
   
-  isAdmin(user: { roles: string | string[]; }){
-    return user.roles.includes('admin');
+  isAdmin(user: { ROLE: string | string[]; }){
+    return user.ROLE.includes('admin');
   }
 
-  isEditor(user: { roles: string | string[]; }){
-    return user.roles.includes('editor');
+  isEditor(user: { ROLE: string | string[]; }){
+    return user.ROLE.includes('editor');
   }
 
-  isSoid(user: { roles: string | string[]; }){
-    return user.roles.includes('soid');
+  isSoid(user: { ROLE: string | string[]; }){
+    return user.ROLE.includes('soid');
   }
-  determinarRol(user: { roles: string | string[]; }){
+  determinarRol(user: { ROLE: string | string[]; }){
     if (this.isSoid(user)) {
+      console.log("holaa aquii SOID: " + user)
+
       this.esSoid =true;
     } if (this.isAdmin(user)) {
+      console.log("holaa aquii ADMIN: " + user)
+
       this.esSoid =true;
     }if (this.isEditor(user)) {
+      console.log("holaa aquii Editor: " + user)
+
       this.esEditor =true;
     }
     else {
+      console.log("holaa aquii LECTOR: " + user)
+
       this.esLector =true;
     }
   }
