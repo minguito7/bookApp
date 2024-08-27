@@ -64,7 +64,7 @@
       </li>
       <!-- Imagen del usuario -->
       <li class="nav-item" *ngIf="isLoggedIn">
-        <img [src]="" class="rounded-circle" alt="User Image" style="width: 40px; height: 40px; margin-left: 10px;">
+        <img [src]="this.fotoServ" class="rounded-circle" alt="User Image" style="width: 40px; height: 40px; margin-left: 10px;">
       </li>
     </ul>
       <ul class="navbar-nav ml-auto">
@@ -143,54 +143,21 @@
                   <div *ngIf="books.length" class="row" >
                       <div *ngFor="let book of books" class="col-md-4 mb-4" >
                           <div class="card">
-                            <img [src]="book.portada" class="card-img-top" alt="{{ book.titulo }}">
+                            <img [src]="baseUrl+book.portada" class="card-img-top" alt="{{ book.titulo }}">
                             <div class="card-body">
                               <h5 class="card-title">{{ book.titulo }}</h5>
                               <p class="card-text"><strong>ISBN:</strong> {{ book.isbn }}</p>
                               <p class="card-text"><strong>Fecha de Publicación:</strong> {{ book.fecha_publicacion | date:'dd/MM/yyyy' }}</p>
-                              <p class="card-text">{{ book.descripcion || 'No hay descripción disponible.' }}</p>
-                              <a [href]="book.archivo" class="btn btn-primary" target="_blank" *ngIf="book.archivo">Ver Archivo</a>
-                              <a [href]="book.resenas_libro.length ? '/resenas/' + book.id_autor : ''" class="btn btn-secondary" *ngIf="book.resenas_libro.length">Leer Reseñas</a>
+                              <p class="card-text">{{ book.id_autor.nombre || 'No hay generos disponible.' }}</p>
+                              <a [href]="book.archivo" class="btn btn-primary" target="_blank" *ngIf="book.archivo && isLoggedIn">Ver Archivo</a>
+                              <a [href]="book.resenas_libro.length ? '/resenas/' + book.id_autor : ''" class="btn btn-secondary" *ngIf="book.resenas_libro.length && isLoggedIn">Leer Reseñas</a>
                             </div>
                           </div>
                       </div>
-                      <!--<div class="col-md-2 book-card">
-                          <div class="card">
-                              <img src="https://via.placeholder.com/150" class="card-img-top" alt="Portada del libro">
-                              <div class="card-body">
-                                  <h5 class="card-title">Libro 2</h5>
-                                  <p class="card-text">Descripción breve del libro.</p>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-2 book-card">
-                          <div class="card">
-                              <img src="https://via.placeholder.com/150" class="card-img-top" alt="Portada del libro">
-                              <div class="card-body">
-                                  <h5 class="card-title">Libro 3</h5>
-                                  <p class="card-text">Descripción breve del libro.</p>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-2 book-card">
-                          <div class="card">
-                              <img src="https://via.placeholder.com/150" class="card-img-top" alt="Portada del libro">
-                              <div class="card-body">
-                                  <h5 class="card-title">Libro 4</h5>
-                                  <p class="card-text">Descripción breve del libro.</p>
-                              </div>
-                          </div>
-                      </div>
-                      <div class="col-md-2 book-card">
-                          <div class="card">
-                              <img src="https://via.placeholder.com/150" class="card-img-top" alt="Portada del libro">
-                              <div class="card-body">
-                                  <h5 class="card-title">Libro 5</h5>
-                                  <p class="card-text">Descripción breve del libro.</p>
-                              </div>
-                          </div>
-                      </div>-->
-                  </div>                 
+                      
+                  </div>  
+                  
+                                 
               </div>
           </div>
       </div>

@@ -18,8 +18,15 @@ export class HomeComponent implements OnInit {
   poblacionForm: FormGroup;
   errorMessage: string | undefined;
   isLoggedIn: boolean = false;
+  esAdmin: boolean = false;
+  esEditor: boolean = false;
+  esSoid: boolean = false;
+  esLector: boolean = false;
+
+
   userProfileImage: string | undefined;
   photoUrl: any;
+  fotoServ: string | undefined;
 
   getImageUrl(imageName: string): string {
     return `${this.baseUrl}${imageName}`;
@@ -48,14 +55,12 @@ export class HomeComponent implements OnInit {
       const decodedToken: any = jwt_decode(token);
       const userId = decodedToken.decodedToken;
       this.authService.validateToken(token).subscribe(response => {
-        
-        const objectURL = URL.createObjectURL(response.usuarioLogged.AVATAR);
-        this.photoUrl = this.sanitizer.bypassSecurityTrustUrl(`${this.baseUrl} ${objectURL}`);
-        console.log("holaa aquii: "+ this.photoUrl)
+        this.fotoServ = this.baseUrl+response.usuarioLogged.AVATAR;
+        //const objectURL = URL.createObjectURL(this.fotoServ);
+        //this.photoUrl = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+        console.log("holaa aquii: " + this.fotoServ)
       });
-    }
-
-   
+    } 
 
   }
 
@@ -113,11 +118,36 @@ export class HomeComponent implements OnInit {
   isLogged() {
     return this.authService.isLoggedIn;
   }
-
   
+  isAdmin(user: { roles: string | string[]; }){
+    return user.roles.includes('admin');
+  }
 
+  isEditor(user: { roles: string | string[]; }){
+    return user.roles.includes('editor');
+  }
+
+  isSoid(user: { roles: string | string[]; }){
+    return user.roles.includes('soid');
+  }
+  determinarRol(user: { roles: string | string[]; }){
+    if (this.isSoid(user)) {
+      this.esSoid =true;
+    } if (this.isAdmin(user)) {
+      this.esSoid =true;
+    }if (this.isEditor(user)) {
+      this.esEditor =true;
+    }
+    else {
+      this.esLector =true;
+    }
+  }
 
 }
+
+
+
+
 function base64UrlDecode(str: string): string {
   // Reemplazar caracteres específicos de URL
   str = str.replace(/-/g, '+').replace(/_/g, '/');
@@ -145,7 +175,7 @@ export function jwt_decode(token: string): any {
       throw new Error('El token JWT no tiene el formato adecuado');
     }
 
-    // Decodificar la parte del payload
+    // Decodificar la parte del payloadthis.fotoServ
     const payload = parts[1];
     const decodedPayload = base64UrlDecode(payload);
 
