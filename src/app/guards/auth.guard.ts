@@ -1,19 +1,22 @@
-// src/app/guards/auth.guard.ts
-
 import { Injectable } from '@angular/core';
 import { CanActivate, Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) { }
 
   canActivate(): boolean {
-    if (this.authService.getToken()) {
+    // Obtener el token del almacenamiento local
+    const token = localStorage.getItem('Bearer');
+    
+    // Verificar si el token existe y es válido
+    if (token) {
+      // Aquí podrías añadir más validaciones si necesitas verificar el token con la API
       return true;
     } else {
+      // Redirigir a la página de login si no hay token
       this.router.navigate(['/login']);
       return false;
     }

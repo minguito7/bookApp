@@ -3,7 +3,8 @@ import { bootstrapApplication } from '@angular/platform-browser';
 
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppComponent } from './app/app.component'; // Importa el componente standalone
+import { AppModule } from './app/app.module';
 
 platformBrowserDynamic()
-  .bootstrapModule(AppComponent) // Arranca la aplicación con el componente standalone
+  .bootstrapModule(AppModule) // Arranca la aplicación con el componente standalone
   .catch(err => console.error(err));

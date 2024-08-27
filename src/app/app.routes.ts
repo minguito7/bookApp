@@ -10,11 +10,11 @@ import { AuthGuard } from './guards/auth.guard';
 // src/app/app-routing.module.ts
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, canActivate: [AuthGuard] },
-    { path: 'login', component: LoginComponent },
-    { path: 'register', component: RegisterComponent },
-  ];
-  
+  { path: '', component: HomeComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'registro', component: RegisterComponent },
+  { path: '**', redirectTo: '' } // Redirige cualquier ruta desconocida a HomeComponent
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
